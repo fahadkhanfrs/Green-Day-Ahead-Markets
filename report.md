@@ -28,3 +28,10 @@ This matches real-world:
 Oversupply → prices fall (even negative sometimes)
 
 So your model is capturing correct physics
+
+Even after removing the immediate autoregressive term (lag-1), the model retains high predictive power, indicating strong temporal structure in GDAM prices.
+
+Price is NOT driven primarily by weather - ablation study result.
+Weather improves model only when combined with lag features
+
+GDAM MCP is primarily driven by autoregressive temporal dynamics, with weather variables contributing only marginal predictive improvement.

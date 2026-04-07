@@ -8,6 +8,9 @@ features = [
     'price_lag_1',
     'price_lag_4',
     'price_lag_96',
+    'price_rolling_mean_4',
+    'price_rolling_std_4',
+    'solar_hour_interaction',
     'hour_sin',
     'hour_cos',
     'solar',
@@ -20,12 +23,19 @@ features = [
 X = df[features]
 y = df['price']
 
-split = int(len(df)*0.8)
+split = int(len(df)*0.5)
 
 X_train, X_test = X[:split], X[split:]
 y_train, y_test = y[:split], y[split:]
 
-model = XGBRegressor(n_estimators=200, max_depth=6)
+model = XGBRegressor(
+    n_estimators=500,
+    max_depth=4,
+    learning_rate=0.05,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    random_state=42
+)
 model.fit(X_train, y_train)
 
 preds = model.predict(X_test)
