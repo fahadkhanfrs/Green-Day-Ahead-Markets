@@ -46,8 +46,8 @@ print("R2:", r2_score(y_test, preds))
 
 plt.figure(figsize=(12,6))
 
-plt.plot(y_test.values[:500], label='Actual')
-plt.plot(preds[:500], label='Predicted')
+plt.plot(y_test.values[:300], label='Actual')
+plt.plot(preds[:300], label='Predicted')
 
 plt.legend()
 plt.title("Actual vs Predicted MCP")

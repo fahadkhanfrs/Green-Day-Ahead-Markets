@@ -23,17 +23,25 @@ features = [
 X = df[features]
 y = df['price']
 
-split = int(len(df)*0.5)
+df= df.sort_values('datetime')
 
-X_train, X_test = X[:split], X[split:]
-y_train, y_test = y[:split], y[split:]
+train_df = df[df['datetime'] < '2023-01-01']
+test_df = df[df['datetime'] > '2023-06-01']
+
+X_train = train_df[features]
+y_train = train_df['price']
+
+X_test = test_df[features]
+y_test = test_df['price']
 
 model = XGBRegressor(
-    n_estimators=500,
-    max_depth=4,
-    learning_rate=0.05,
-    subsample=0.8,
-    colsample_bytree=0.8,
+    n_estimators=800,
+    max_depth=3,
+    learning_rate=0.03,
+    subsample=0.7,
+    colsample_bytree=0.7,
+    reg_alpha=1,
+    reg_lambda=2,
     random_state=42
 )
 model.fit(X_train, y_train)

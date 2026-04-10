@@ -1,5 +1,7 @@
 import pandas as pd
+import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, r2_score
 
 df = pd.read_csv("final_data.csv")
@@ -22,15 +24,24 @@ features = [
 X = df[features]
 y = df['price']
 
-split = int(len(df)*0.8)
+df= df.sort_values('datetime')
 
-X_train, X_test = X[:split], X[split:]
-y_train, y_test = y[:split], y[split:]
+train_df = df[df['datetime'] < '2023-01-01']
+test_df = df[df['datetime'] > '2023-06-01']
 
-model = LinearRegression()
+X_train = train_df[features]
+y_train = train_df['price']
+
+X_test = test_df[features]
+y_test = test_df['price']
+
+model = Ridge(alpha=10)
 model.fit(X_train, y_train)
 
 preds = model.predict(X_test)
 
 print("MAE:", mean_absolute_error(y_test, preds))
 print("R2:", r2_score(y_test, preds))
+
+mape = np.mean(np.abs((y_test - preds) / y_test)) * 100
+print("MAPE:", mape)
