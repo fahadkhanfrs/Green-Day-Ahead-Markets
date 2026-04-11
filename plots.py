@@ -41,8 +41,8 @@ model = XGBRegressor(
 model.fit(X_train, y_train)
 preds = model.predict(X_test)
 
-print("MAE:", mean_absolute_error(y_test, preds))
-print("R2:", r2_score(y_test, preds))
+print("MAE", mean_absolute_error(y_test, preds))
+print("R2", r2_score(y_test, preds))
 
 plt.figure(figsize=(12,6))
 
