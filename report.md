@@ -1,35 +1,47 @@
-Raw cleared buy/sell volumes showed weak correlation with MCP. However, engineered imbalance features significantly improved predictive performance.
+Residual vs solar
 
-data is:
+High spread when solar is close to 0
+tighter when solar is high
 
-GDAM
-Supply dominated by renewables (solar/wind)
+Low solar (night / low renewable) → unpredictable market → larger errors
 
-Weather (solar) already captures supply variation
+model works for normal conditions, fails on extreme events
 
-That’s why:
+Underpredicting high prices
+Slight overprediction in some mid ranges
+Overall unbiased, but variance increases with price
 
-solar -> strong negative (-0.34)
-sell_mw -> stronger than buy_mw
-ratio works better than difference
+struggles without short term immediate past features
 
------------------------
+MAE: 686.3816708474038
+R2: 0.8109971670523476
+MAPE: 23.711670668077282
 
-Key insight
+Feature Importance:
 
-Your data is showing:
+                   feature   importance
+0             price_lag_96  1701.575487
+1            price_lag_192   722.399385
+7                    solar  -302.126442
+9                     temp   213.818699
+10     demand_supply_ratio  -124.802275
+4   solar_hour_interaction   110.377030
+5                 hour_sin   -84.228123
+3     price_rolling_std_96    76.380121
+8                    cloud   -73.726802
+2    price_rolling_mean_96    18.057237
+6                 hour_cos   -11.912679
 
-Price ↓ when renewable supply ↑ (solar high)
+Weather now matters more:
+solar negative
+temp positive
 
-This matches real world:
+model is forced to use exogenous variables
 
-Oversupply → prices fall (even negative)
+weekly features made the performance worse, added more noice instead of contributing
 
-So model is capturing correct physics
+added is_low_solar after residual analysis showed high spread
 
-Even after removing the immediate autoregressive term (lag-1), the model retains high predictive power, meaning strong temporal structure in GDAM prices.
+used huber regression (robust to spikes)
 
-Price is NOT driven primarily by weather - ablation study result.
-Weather improves model only when combined with lag features
-
-MCP is primarily driven by autoregressive temporal dynamics, with weather variables contributing only marginal predictive improvement.
+model performance improved after removing leakage and adding robust regression, remaining error is concentrated in spike regimes, so moving on to toward regime based modeling
