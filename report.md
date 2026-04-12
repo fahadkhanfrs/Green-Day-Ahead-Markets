@@ -3,44 +3,41 @@ Residual vs solar
 High spread when solar is close to 0
 tighter when solar is high
 
-Low solar (night / low renewable) → unpredictable market → larger errors
-
-model works for normal conditions, fails on extreme events
-
 Underpredicting high prices
 Slight overprediction in some mid ranges
 Overall unbiased, but variance increases with price
 
 struggles without short term immediate past features
 
-MAE: 686.3816708474038
-R2: 0.8109971670523476
-MAPE: 23.711670668077282
+MAE: 468.9677035668098
+R2: 0.8736344827482706
+MAPE: 15.25164590824688
 
 Feature Importance:
 
                    feature   importance
-0             price_lag_96  1701.575487
-1            price_lag_192   722.399385
-7                    solar  -302.126442
-9                     temp   213.818699
-10     demand_supply_ratio  -124.802275
-4   solar_hour_interaction   110.377030
-5                 hour_sin   -84.228123
-3     price_rolling_std_96    76.380121
-8                    cloud   -73.726802
-2    price_rolling_mean_96    18.057237
-6                 hour_cos   -11.912679
+6             price_lag_96  1627.858978
+7            price_lag_192  1263.222647
+0                 is_spike   677.054183
+2          price_change_96   626.558844
+4                  weekday   -95.164657
+3              lag96_solar   -80.197383
+13                   solar    49.166776
+16     demand_supply_ratio   -37.607528
+15                    temp    35.127036
+14                   cloud   -20.373261
+12                hour_cos    17.633412
+10  solar_hour_interaction    16.468350
+9     price_rolling_std_96   -11.010229
+8    price_rolling_mean_96     9.779000
+11                hour_sin    -9.279413
+1             is_low_solar     6.330981
+5             is_peak_hour     0.661166
 
-Weather now matters more:
-solar negative
-temp positive
-
-model is forced to use exogenous variables
 
 weekly features made the performance worse, added more noice instead of contributing
 
-added is_low_solar after residual analysis showed high spread
+added is_low_solar because residual analysis showed high spread when solar was low
 
 used huber regression (robust to spikes)
 
