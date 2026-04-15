@@ -42,3 +42,7 @@ added is_low_solar because residual analysis showed high spread when solar was l
 used huber regression (robust to spikes)
 
 model performance improved after removing leakage and adding robust regression, remaining error is concentrated in spike regimes, so moving on to toward regime based modeling
+
+Aggressive spike detection degrades performance due to false positives, while conservative spike correction improves prediction stability.
+
+Simple models fail to capture spike regimes. Introducing a spike aware hybrid approach improves prediction performance under realistic constraints.
