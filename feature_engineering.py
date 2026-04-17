@@ -36,6 +36,7 @@ df['hour_sin'] = np.sin(2*np.pi*df['hour']/24)
 df['hour_cos'] = np.cos(2*np.pi*df['hour']/24)
 df['weekday'] = df['datetime'].dt.weekday
 df['is_peak_hour'] = df['hour'].isin([18,19,20,21]).astype(int)
+df['delta'] = df['price'] - df['price_lag_96']
 
 df['solar_hour_interaction'] = df['solar'] * df['hour_sin']
 

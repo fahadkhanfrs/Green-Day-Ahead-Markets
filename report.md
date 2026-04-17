@@ -46,3 +46,8 @@ model performance improved after removing leakage and adding robust regression, 
 Aggressive spike detection degrades performance due to false positives, while conservative spike correction improves prediction stability.
 
 Simple models fail to capture spike regimes. Introducing a spike aware hybrid approach improves prediction performance under realistic constraints.
+
+Logical Flow:
+Train reg_model → Predict base values.
+Train clf_model → Predict spike probabilities.
+Train delta_model → Adjust base predictions for high-probability spikes.
